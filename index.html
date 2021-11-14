@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <label for="privkey">Private Key:</label>
+    <br />
+    <textarea id="privkey" rows="4" cols="50"></textarea>
+    <br />
+    <button onclick="encode_key()">Encode</button>
+
+    <br />
+    <br />
+
+    <label for="base58key">HEX Private Key:</label>
+    <br />
+    <textarea id="base58key" rows="4" cols="50"></textarea>
+
+    <script>
+
+        function toHexString(byteArray) {
+            return Array.from(byteArray, function (byte) {
+                return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+            }).join('')
+        }
+
+        function encode_key() {
+            try {
+                let inkey = document.getElementById("privkey").value;
+                let secretKey = Uint8Array.from(JSON.parse(inkey));
+                let hexKey = toHexString(secretKey.slice(0, 32));
+                console.log(hexKey);
+                document.getElementById("base58key").value = hexKey;
+            } catch (e) {
+                alert(e);
+            }
+
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
